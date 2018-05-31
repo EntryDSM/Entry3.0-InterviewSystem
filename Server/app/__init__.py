@@ -19,8 +19,8 @@ def create_app(*config_cls):
         app_.config.from_object(config)
 
     JWTManager(app_)
-    Router(app_)
     SQLAlchemy(app_)
+    Router(app_)
 
     app_.after_request(after_request)
 
