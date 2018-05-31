@@ -42,6 +42,6 @@ def blacklist_check(fn):
 
 
 class Router:
-
     def __init__(self, app):
-        pass
+        from app.views.auth import auth
+        app.register_blueprint(auth.api.blueprint)
