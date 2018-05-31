@@ -1,0 +1,13 @@
+ApiDoc==1.4.0
+click==6.7
+Flask==1.0.2
+Flask-JWT-Extended==3.9.1
+Flask-SQLAlchemy==2.3.2
+itsdangerous==0.24
+Jinja2==2.7.3
+jsonschema==2.4.0
+MarkupSafe==1.0
+PyJWT==1.6.4
+PyYAML==3.11
+SQLAlchemy==1.2.8
+Werkzeug==0.14.1
