@@ -16,13 +16,13 @@ class Auth(Resource):
 
 @api.resource('/refresh')
 class Refresh(Resource):
-    # @blacklist_check
+    @blacklist_check
     def post(self):
         return 200
 
 
 @api.resource('logout')
 class Logout(Resource):
-    # @blacklist_check
+    @blacklist_check
     def delete(self):
         return 200
