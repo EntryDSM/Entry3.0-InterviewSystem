@@ -1,0 +1,1 @@
+from .graduate_info import GraduateInfo
