@@ -17,3 +17,4 @@ class Admin(db.Model):
     email = db.Column(db.VARCHAR(50))
     password = db.Column(db.VARCHAR(200))
     admin_type = db.Column(db.Enum(AdminTypeEnum))
+    name = db.Column(db.VARCHAR(4))
