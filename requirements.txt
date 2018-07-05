@@ -7,6 +7,7 @@ itsdangerous==0.24
 Jinja2==2.7.3
 jsonschema==2.4.0
 MarkupSafe==1.0
+peewee==3.5.2
 PyJWT==1.6.4
 PyYAML==3.11
 SQLAlchemy==1.2.8
