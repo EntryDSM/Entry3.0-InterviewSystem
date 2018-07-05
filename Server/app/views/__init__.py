@@ -1,6 +1,10 @@
 from functools import wraps
-
-from flask import abort
+from binascii import hexlify
+from hashlib import pbkdf2_hmac
+from uuid import UUID
+import ujson
+from flask_restful import Resource
+from flask import abort, current_app, g, Response
 from flask_jwt_extended import get_jwt_identity, get_raw_jwt, jwt_required, jwt_refresh_token_required
 
 blacklist = set()
@@ -40,6 +44,25 @@ def blacklist_check(fn):
         return fn(*args, **kwargs)
     return wrapper
 
+class BaseResource(Resource):
+
+    @classmethod
+    def unicode_safe_json_dumps(cls, data, status_code=200, **kwargs):
+        return Response(
+            ujson.dumps(data, ensure_ascii=False),
+            status_code,
+            content_type='application/json; charset=utf8',
+            **kwargs
+        )
+
+    @classmethod
+    def encrypt_password(cls, password):
+        return hexlify(pbkdf2_hmac(
+            hash_name='sha256',
+            password=password.encode(),
+            salt=current_app.secret_key.encode(),
+            iterations=100000
+        )).decode('utf-8')
 
 class Router:
     def __init__(self, app):
