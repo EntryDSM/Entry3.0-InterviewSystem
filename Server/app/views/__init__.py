@@ -7,7 +7,11 @@ from flask_restful import Resource
 from flask import abort, current_app, g, Response
 from flask_jwt_extended import get_jwt_identity, get_raw_jwt, jwt_required, jwt_refresh_token_required
 
+from app.models.admin import Admin
+
+
 blacklist = set()
+
 
 def after_request(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
@@ -22,10 +26,12 @@ def auth_required(fn):
     @wraps(fn)
     @jwt_required
     def wrapper(*args, **kwargs):
-        # account = AccountModel.objects(username=get_jwt_identity()).first()
-        #
-        # if not account:
-        #     abort(403)
+        account = Admin.query.filter_by(em=get_jwt_identity()).first()
+
+        if account is None:
+            abort(403)
+
+        g.user = account.email
 
         return fn(*args, **kwargs)
 
@@ -43,6 +49,7 @@ def blacklist_check(fn):
 
         return fn(*args, **kwargs)
     return wrapper
+
 
 class BaseResource(Resource):
 
