@@ -2,27 +2,53 @@ from flask import (Blueprint, request, abort)
 from flask_restful import Resource, Api
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity, get_raw_jwt
-from uuid import uuid4
-from app.views import blacklist_check, blacklist
+from app.views import blacklist_check, blacklist, BaseResource
+
+from app.models.admin import Admin
 
 api = Api(Blueprint('auth', __name__))
 
 
 @api.resource('/auth')
-class Auth(Resource):
+class Auth(BaseResource):
     def post(self):
-        return 200
+        request_data = request.json
+        email = request_data['email']
+        password = request_data['password']
+
+        admin = Admin.query.filter_by(email=email, password=self.encrypt_password(password)).first()
+
+        if admin is None:
+            abort(401)
+        else:
+            access_token = create_access_token(identity=email)
+            refresh_token = create_refresh_token(identity=email)
+
+            response = dict(
+                access_token=access_token,
+                refresh_token=refresh_token
+            )
+
+            return response, 200
 
 
 @api.resource('/refresh')
 class Refresh(Resource):
     @blacklist_check
     def post(self):
-        return 200
+        current_user = get_jwt_identity()
+        response = dict(
+            access_token=create_access_token(identity=current_user)
+        )
+
+        return response, 200
 
 
 @api.resource('logout')
 class Logout(Resource):
     @blacklist_check
     def delete(self):
+        jti = get_raw_jwt()['jti']
+        blacklist.add(jti)
+
         return 200
