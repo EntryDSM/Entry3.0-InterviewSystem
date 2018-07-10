@@ -11,5 +11,4 @@ class InterviewData(db.Model):
     question_id = db.Column(db.Integer, db.ForeignKey('question.question_id'))
     take_interview = db.Column(db.Boolean, default=True)
     interview_result = db.Column(db.JSON)
-    grade = db.Column(db.ARRAY(db.Integer))
     comment = db.Column(db.VARCHAR(10))
