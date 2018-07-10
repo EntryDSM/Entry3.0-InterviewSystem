@@ -44,7 +44,7 @@ class Refresh(Resource):
         return response, 200
 
 
-@api.resource('logout')
+@api.resource('/logout')
 class Logout(Resource):
     @blacklist_check
     def delete(self):
