@@ -12,4 +12,4 @@ class InterviewData(db.Model):
     take_interview = db.Column(db.Boolean)
     interview_result = db.Column(db.JSON)
     grade = db.Column(db.ARRAY(db.Integer))
-    comment = db.Column(db.VARCHAR)
+    comment = db.Column(db.VARCHAR(10))
