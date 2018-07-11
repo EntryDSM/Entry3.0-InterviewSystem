@@ -5,7 +5,7 @@ from sqlalchemy.dialects.mysql import INTEGER as Integer
 class InterviewData(db.Model):
     __tablename__ = "interview_data"
 
-    index = db.Column(Integer(unsigned=True), autoincrement=True, primary_key=True)
+    interview_data_id = db.Column(Integer(unsigned=True), autoincrement=True, primary_key=True)
     info_id = db.Column(Integer(unsigned=True), db.ForeignKey("info.info_id"))
     interview_id = db.Column(db.Integer, db.ForeignKey("interview.interview_id"))
     admin_id = db.Column(db.Integer, db.ForeignKey('admin.admin_id'))
