@@ -5,12 +5,12 @@ from app.views import BaseResource, auth_required
 from app.models.question import Question
 from app.models import db
 
-api = Api(Blueprint('document generation', __name__))
+api = Api(Blueprint('question', __name__))
 api.prefix = '/admin'
 
 
 @api.resource('/new')
-class New(BaseResource):
+class Maker(BaseResource):
     @auth_required
     def post(self):
         request_data = request.json
