@@ -44,3 +44,8 @@ class Grading(BaseResource):
 
         return 200
 
+    @auth_required
+    def get(self, exam_code: int, question_id: int):
+        question = Question.query.filter_by(question_id=question_id).first()
+
+        return dict(question), 200
