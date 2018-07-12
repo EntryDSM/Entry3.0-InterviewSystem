@@ -1,7 +1,6 @@
 from functools import wraps
 from binascii import hexlify
 from hashlib import pbkdf2_hmac
-from uuid import UUID
 import ujson
 from flask_restful import Resource
 from flask import abort, current_app, g, Response
@@ -93,7 +92,8 @@ class Router:
         from app.views.auth import auth
         app.register_blueprint(auth.api.blueprint)
 
-        from app.views.admin import question_generation, question_manage
+        from app.views.admin.question import question_generation
+        from app.views.admin.question import question_manage
         app.register_blueprint(question_generation.api.blueprint)
         app.register_blueprint(question_manage.api.blueprint)
 
