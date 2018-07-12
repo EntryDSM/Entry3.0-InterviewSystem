@@ -3,6 +3,7 @@ from flask_restful import Resource, Api
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity, get_raw_jwt
 from app.views import blacklist_check, blacklist, BaseResource
+from werkzeug.security import check_password_hash
 
 from app.models.admin import Admin
 
@@ -16,11 +17,9 @@ class Auth(BaseResource):
         email = request_data['email']
         password = request_data['password']
 
-        admin = Admin.query.filter_by(email=email, password=self.encrypt_password(password)).first()
+        admin = Admin.query.filter_by(email=email).first()
 
-        if admin is None:
-            abort(401)
-        else:
+        if check_password_hash(admin.password, password):
             access_token = create_access_token(identity=email)
             refresh_token = create_refresh_token(identity=email)
 
@@ -30,6 +29,9 @@ class Auth(BaseResource):
             )
 
             return response, 200
+
+        else:
+            abort(401)
 
 
 @api.resource('/refresh')

@@ -77,23 +77,13 @@ class BaseResource(Resource):
             **kwargs
         )
 
-    @classmethod
-    def encrypt_password(cls, password):
-        return hexlify(pbkdf2_hmac(
-            hash_name='sha256',
-            password=password.encode(),
-            salt=current_app.secret_key.encode(),
-            iterations=100000
-        )).decode('utf-8')
-
 
 class Router:
     def __init__(self, app):
         from app.views.auth import auth
         app.register_blueprint(auth.api.blueprint)
 
-        from app.views.admin.question import question_generation
-        from app.views.admin.question import question_manage
+        from app.views.admin.question import question_generation, question_manage
         app.register_blueprint(question_generation.api.blueprint)
         app.register_blueprint(question_manage.api.blueprint)
 
