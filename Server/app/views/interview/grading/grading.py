@@ -10,7 +10,7 @@ from app.models.admin import Admin
 api = Api(Blueprint('grading', __name__))
 
 
-@api.resource('/<int: exam_code>/<int: question_id>')
+@api.resource('/<int:exam_code>/<int:question_id>')
 class Grading(BaseResource):
     @auth_required
     def post(self, exam_code: int, question_id: int):

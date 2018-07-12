@@ -18,7 +18,7 @@ class QuestionList(BaseResource):
         return [dict(question) for question in questions], 200
 
 
-@api.resource('/<question_id: int>')
+@api.resource('/<int:question_id>')
 class Manage(BaseResource):
     @admin_required
     def get(self, question_id: int):

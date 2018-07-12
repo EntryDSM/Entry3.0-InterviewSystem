@@ -10,7 +10,7 @@ api = Api(Blueprint('search', __name__))
 api.prefix = '/search'
 
 
-@api.resource("/<exam_code: int>")
+@api.resource("/<int:exam_code>")
 class Search(BaseResource):
     @admin_required
     def get(self, exam_code: int):
