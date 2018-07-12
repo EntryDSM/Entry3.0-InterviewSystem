@@ -7,7 +7,7 @@ from flask_restful import Resource
 from flask import abort, current_app, g, Response
 from flask_jwt_extended import get_jwt_identity, get_raw_jwt, jwt_required, jwt_refresh_token_required
 
-from app.models.admin import Admin
+from app.models.admin import Admin, AdminTypeEnum
 
 
 blacklist = set()
@@ -29,6 +29,22 @@ def auth_required(fn):
         account = Admin.query.filter_by(em=get_jwt_identity()).first()
 
         if account is None:
+            abort(403)
+
+        g.user = account.email
+
+        return fn(*args, **kwargs)
+
+    return wrapper
+
+
+def admin_required(fn):
+    @wraps(fn)
+    @jwt_required
+    def wrapper(*args, **kwargs):
+        account = Admin.query.filter_by(em=get_jwt_identity()).first()
+
+        if (account is None) or (account.admin_type != AdminTypeEnum.ROOT) :
             abort(403)
 
         g.user = account.email
@@ -70,6 +86,7 @@ class BaseResource(Resource):
             salt=current_app.secret_key.encode(),
             iterations=100000
         )).decode('utf-8')
+
 
 class Router:
     def __init__(self, app):
