@@ -29,6 +29,7 @@ class Grading(BaseResource):
         # question matching check
         original_question = list(question.values())
         requested_question = list(grading.keys())
+
         if original_question != requested_question:
             abort(400)
 
@@ -48,4 +49,4 @@ class Grading(BaseResource):
     def get(self, exam_code: int, question_id: int):
         question = Question.query.filter_by(question_id=question_id).first()
 
-        return dict(question), 200
+        return self.unicode_safe_json_dumps(dict(question), 200)

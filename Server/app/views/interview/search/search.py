@@ -29,4 +29,4 @@ class Search(BaseResource):
             "student_info": student_info
         }
 
-        return response, 200
+        return self.unicode_safe_json_dumps(response, 200)

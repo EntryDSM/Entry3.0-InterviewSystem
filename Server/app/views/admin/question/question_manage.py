@@ -15,7 +15,7 @@ class QuestionList(BaseResource):
     def get(self):
         questions = Question.query.all()
 
-        return [dict(question) for question in questions], 200
+        return self.unicode_safe_json_dumps([dict(question) for question in questions], 200)
 
 
 @api.resource('/<int:question_id>')
