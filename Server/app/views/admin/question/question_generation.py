@@ -5,7 +5,7 @@ from app.views import BaseResource, auth_required
 from app.models.question import Question
 from app.models import db
 
-api = Api(Blueprint('question', __name__))
+api = Api(Blueprint('new document', __name__))
 api.prefix = '/admin/question'
 
 
