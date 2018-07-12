@@ -26,7 +26,7 @@ class Search(BaseResource):
 
         response = {
             "question_list": questions,
-            student_info: student_info
+            "student_info": student_info
         }
 
         return response, 200
