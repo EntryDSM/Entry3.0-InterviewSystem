@@ -1,7 +1,8 @@
 from app import create_app
 from app.models import db
 from config.dev import Config
-from app.models.misc import Admin, AdminTypeEnum
+from app.models.admin import Admin, AdminTypeEnum
+from werkzeug.security import generate_password_hash
 import unittest
 import json
 
@@ -42,15 +43,15 @@ class BasicTestCase(unittest.TestCase):
         self.interview_refresh_token = response['refresh_token']
 
     def _create_fake_admin(self):
-        admin = Admin(admin_id="admin",
-                      email="admin@entrydsm.hs.kr",
-                      password="admin1234",
-                      admin_type=AdminTypeEnum.ROOT)
+        admin = Admin(email="admin@entrydsm.hs.kr",
+                      password=generate_password_hash("admin1234"),
+                      admin_type=AdminTypeEnum.ROOT,
+                       name="에리히")
 
-        interviewer = Admin(admin_id="interview",
-                            email="interview@entrydsm.hs.kr",
-                            password="admin1234",
-                            admin_type=AdminTypeEnum.INTERVIEW)
+        interviewer = Admin(email="interview@entrydsm.hs.kr",
+                            password=generate_password_hash("admin1234"),
+                            admin_type=AdminTypeEnum.INTERVIEW,
+                            name="루델")
 
         db.session.add(admin)
         db.session.add(interviewer)
