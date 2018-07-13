@@ -42,3 +42,4 @@ class Info(db.Model):
     exam_code = db.Column(db.VARCHAR(6), default="", unique=True)
     create_at = db.Column(db.DateTime, default=datetime.now)
     update_at = db.Column(db.DateTime, default=datetime.now)
+    receipt_code = db.Column(Integer(display_width=3, unsigned=True, zerofill=True), unique=True, autoincrement=True)
