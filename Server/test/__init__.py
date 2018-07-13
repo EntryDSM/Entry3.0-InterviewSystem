@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash
 import unittest
 import json
 
-app = create_app(Config, test=True)
+app = create_app(Config)
 
 
 class BaseTestCase(unittest.TestCase):

@@ -5,7 +5,7 @@ from app.views import Router, after_request
 from app.models import SQLAlchemy
 
 
-def create_app(*config_cls, test=False):
+def create_app(*config_cls):
     """
     Creates Flask instance & initialize
     Returns:
@@ -19,7 +19,7 @@ def create_app(*config_cls, test=False):
         app_.config.from_object(config)
 
     JWTManager(app_)
-    SQLAlchemy(app_, test)
+    SQLAlchemy(app_)
     Router(app_)
 
     app_.after_request(after_request)
