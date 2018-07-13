@@ -2,6 +2,7 @@ from app import create_app
 from app.models import db
 from config.dev import Config
 from app.models.admin import Admin, AdminTypeEnum
+from app.models.info import Info
 from werkzeug.security import generate_password_hash
 import unittest
 import json
@@ -9,7 +10,7 @@ import json
 app = create_app(Config, test=True)
 
 
-class BasicTestCase(unittest.TestCase):
+class BaseTestCase(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         unittest.TestCase.__init__(self, *args, **kwargs)
@@ -58,11 +59,28 @@ class BasicTestCase(unittest.TestCase):
 
         db.session.commit()
 
+    def _create_fake_apply(self):
+        apply = Info(user_id="",
+                     address_base="서울시 종로구 세종대로 172",
+                     address_detail="광화문",
+                     name="루벤도르프",
+                     parent_name="롬멜",
+                     parent_tell="01012345678",
+                     introduce="자기소개",
+                     study_plan="학업계획서",
+                     exam_code="123456")
+
+        db.session.add(apply)
+
+        db.session.commit()
+
     def setUp(self):
+        self._create_fake_admin()
+        self._create_fake_apply()
         self._get_tokens()
 
     def tearDown(self):
-        pass
+        Admin.query.delete()
 
     def request(self, method, target_uri, data=None, token=None, user_type="admin"):
         if token is None:
