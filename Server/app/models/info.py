@@ -25,7 +25,7 @@ class Info(db.Model):
     __tablename__ = "info"
 
     info_id = db.Column(Integer(unsigned=True), autoincrement=True, primary_key=True)
-    user_id = db.Column(db.VARCHAR(32))
+    user_id = db.Column(db.VARCHAR(32), db.ForeignKey("user.user_id"))
     address_base = db.Column(db.VARCHAR(100), default="")
     address_detail = db.Column(db.VARCHAR(50), default="")
     admission = db.Column(db.Enum(AdmissionEnum), default=AdmissionEnum.NORMAL)
