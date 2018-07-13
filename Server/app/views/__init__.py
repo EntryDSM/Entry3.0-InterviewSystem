@@ -83,9 +83,8 @@ class Router:
         from app.views.auth import auth
         app.register_blueprint(auth.api.blueprint)
 
-        from app.views.admin.question import question_generation, question_manage
-        app.register_blueprint(question_generation.api.blueprint)
-        app.register_blueprint(question_manage.api.blueprint)
+        from app.views.admin import question
+        app.register_blueprint(question.api.blueprint)
 
         from app.views.interview.grading import grading
         from app.views.interview.search import search
