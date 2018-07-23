@@ -2,6 +2,7 @@ from app.models import db
 from sqlalchemy.dialects.mysql import INTEGER as Integer
 from enum import Enum
 from datetime import datetime
+import time
 
 
 class AdmissionEnum(Enum):
@@ -24,22 +25,21 @@ class AdmissionDetailEnum(Enum):
 class Info(db.Model):
     __tablename__ = "info"
 
-    info_id = db.Column(Integer(unsigned=True), autoincrement=True, primary_key=True)
-    user_id = db.Column(db.VARCHAR(32), db.ForeignKey("user.user_id"))
-    address_base = db.Column(db.VARCHAR(100), default="")
-    address_detail = db.Column(db.VARCHAR(50), default="")
+    user_id = db.Column(db.String(32), db.ForeignKey("user.user_id"), primary_key=True)
+    address_base = db.Column(db.String(100), default="")
+    address_detail = db.Column(db.String(50), default="")
     admission = db.Column(db.Enum(AdmissionEnum), default=AdmissionEnum.NORMAL)
     admission_detail = db.Column(db.Enum(AdmissionDetailEnum), default=AdmissionDetailEnum.DEFAULT)
     region = db.Column(db.Boolean(), default=False)
-    name = db.Column(db.VARCHAR(12), default="")
+    name = db.Column(db.String(12), default="")
     sex = db.Column(db.Boolean(), default=True)
-    parent_name = db.Column(db.VARCHAR(12), default="")
-    parent_tell = db.Column(db.VARCHAR(20), default="")
-    my_tel = db.Column(db.VARCHAR(20), default="")
-    introduce = db.Column(db.VARCHAR(1600), default="")
-    study_plan = db.Column(db.VARCHAR(1600), default="")
-    img_path = db.Column(db.VARCHAR(50), default="")
-    exam_code = db.Column(db.VARCHAR(6), default="", unique=True)
-    create_at = db.Column(db.DateTime, default=datetime.now)
-    update_at = db.Column(db.DateTime, default=datetime.now)
+    parent_name = db.Column(db.String(12), default="")
+    parent_tell = db.Column(db.String(20), default="")
+    my_tel = db.Column(db.String(20), default="")
+    introduce = db.Column(db.Text(1600), default="")
+    study_plan = db.Column(db.Text(1600), default="")
+    img_path = db.Column(db.String(50), unique=True, default="")
+    exam_code = db.Column(db.String(6), default="", unique=True)
+    create_at = db.Column(db.TIMESTAMP, default=time.time())
+    update_at = db.Column(db.TIMESTAMP, default=time.time())
     receipt_code = db.Column(Integer(display_width=3, unsigned=True, zerofill=True), unique=True, autoincrement=True)

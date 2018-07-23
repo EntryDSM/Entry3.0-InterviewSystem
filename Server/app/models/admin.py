@@ -13,7 +13,7 @@ class AdminTypeEnum(Enum):
 class Admin(db.Model):
     __tablename__ = "admin"
 
-    admin_id = db.Column(Integer(unsigned=True), autoincrement=True, primary_key=True)
+    admin_id = db.Column(db.String(32), primary_key=True)
     email = db.Column(db.VARCHAR(50))
     password = db.Column(db.VARCHAR(200))
     admin_type = db.Column(db.Enum(AdminTypeEnum))
