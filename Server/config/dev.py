@@ -3,7 +3,7 @@ from datetime import timedelta
 
 class Config:
     DEBUG = True
-    HOST = '0.0.0.0'
+    HOST = 'localhost'
 
     RUN_SETTING = {
         'host': HOST,
@@ -18,5 +18,6 @@ class Config:
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=6)
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=3)
 
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///database.sqlite3'
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:wasitacatisaw?@localhost:3333/entry"
+    # SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:wasitacatisaw?@localhost:3333/"+SERVICE_NAME
     SQLALCHEMY_ECHO = True
