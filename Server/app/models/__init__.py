@@ -8,4 +8,5 @@ class SQLAlchemy:
         db.init_app(app=app)
 
         if app.config["DEBUG"] is True:
+            # db.drop_all(app=app)
             db.create_all(app=app)

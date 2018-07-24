@@ -2,7 +2,6 @@ from app.models import db
 from sqlalchemy.dialects.mysql import INTEGER as Integer
 from enum import Enum
 from datetime import datetime
-import time
 
 
 class AdmissionEnum(Enum):
@@ -22,24 +21,29 @@ class AdmissionDetailEnum(Enum):
     ETC = 7
 
 
+class SexEnum(Enum):
+    FEMALE = 1
+    MALE = 2
+
+
 class Info(db.Model):
     __tablename__ = "info"
 
-    user_id = db.Column(db.String(32), db.ForeignKey("user.user_id"), primary_key=True)
-    address_base = db.Column(db.String(100), default="")
-    address_detail = db.Column(db.String(50), default="")
+    user_id = db.Column(db.String(32), db.ForeignKey("user.user_id", ondelete='CASCADE'), primary_key=True)
+    address_base = db.Column(db.String(100), default="", nullable=False)
+    address_detail = db.Column(db.String(50), default="", nullable=False)
     admission = db.Column(db.Enum(AdmissionEnum), default=AdmissionEnum.NORMAL)
     admission_detail = db.Column(db.Enum(AdmissionDetailEnum), default=AdmissionDetailEnum.DEFAULT)
-    region = db.Column(db.Boolean(), default=False)
-    name = db.Column(db.String(12), default="")
-    sex = db.Column(db.Boolean(), default=True)
-    parent_name = db.Column(db.String(12), default="")
-    parent_tell = db.Column(db.String(20), default="")
-    my_tel = db.Column(db.String(20), default="")
-    introduce = db.Column(db.Text(1600), default="")
-    study_plan = db.Column(db.Text(1600), default="")
-    img_path = db.Column(db.String(50), unique=True, default="")
-    exam_code = db.Column(db.String(6), default="", unique=True)
-    create_at = db.Column(db.TIMESTAMP, default=time.time())
-    update_at = db.Column(db.TIMESTAMP, default=time.time())
+    region = db.Column(db.Boolean, default=False, nullable=False)
+    name = db.Column(db.String(20), default="", nullable=False)
+    sex = db.Column(db.Enum(SexEnum))
+    parent_name = db.Column(db.String(20), default="", nullable=False)
+    parent_tell = db.Column(db.String(15), default="", nullable=False)
+    my_tel = db.Column(db.String(15), default="", nullable=False)
+    introduce = db.Column(db.String(1600), default="", nullable=False)
+    study_plan = db.Column(db.String(1600), default="", nullable=False)
+    img_path = db.Column(db.String(50), unique=True)
+    exam_code = db.Column(db.String(6), unique=True)
+    create_at = db.Column(db.DateTime, default=datetime.now())
+    update_at = db.Column(db.DateTime, default=datetime.now())
     receipt_code = db.Column(Integer(display_width=3, unsigned=True, zerofill=True), unique=True, autoincrement=True)
