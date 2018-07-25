@@ -15,7 +15,7 @@ class Search(BaseResource):
     @admin_required
     def get(self, exam_code: int):
         questions = Question.query.all()
-        questions = [question.question_id for question in questions]
+        questions = [[question.title, question.question_id] for question in questions]
 
         student_info = Info.query.filter_by(exam_code=exam_code)
         student_info = {
