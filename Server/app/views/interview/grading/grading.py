@@ -50,5 +50,7 @@ class Grading(BaseResource):
     @auth_required
     def get(self, exam_code: int, question_id: int):
         question = Question.query.filter_by(question_id=question_id).first()
+        question = question.__dict__
+        question.pop("_sa_instance_state")
 
-        return self.unicode_safe_json_dumps(dict(question), 200)
+        return self.unicode_safe_json_dumps(question, 200)
