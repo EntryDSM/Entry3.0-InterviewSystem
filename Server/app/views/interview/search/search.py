@@ -17,7 +17,7 @@ class Search(BaseResource):
         questions = Question.query.all()
         questions = [[question.title, question.question_id] for question in questions]
 
-        student_info = Info.query.filter_by(exam_code=exam_code)
+        student_info = Info.query.filter_by(exam_code=exam_code).first()
         student_info = {
             "name": student_info.name,
             "admission_type": str(student_info.admission),
