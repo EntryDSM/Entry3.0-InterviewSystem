@@ -6,42 +6,44 @@ from app.models.interview_data import InterviewData
 from app.models.info import Info
 from app.models.question import Question
 from app.models.admin import Admin
+from app.models.user import User
 
 api = Api(Blueprint('grading', __name__))
 
 
-@api.resource('/<int:exam_code>/<int:question_id>')
+@api.resource('/<exam_code>/<question_id>')
 class Grading(BaseResource):
     @auth_required
-    def post(self, exam_code: int, question_id: int):
+    def post(self, exam_code: str, question_id: int):
         request_data = request.json
 
         take_interview = request_data["take_interview"]
         grading = request_data["grading"]
-        comment = request_data["comment"] if request_data["comment"] else ""
+        comment = request_data["comment"]
 
         admin = get_jwt_identity()
         admin = Admin.query.filter_by(email=admin).first()
 
         info = Info.query.filter_by(exam_code=exam_code).first()
+        user = User.query.filter_by(user_id=info.user_id).first()
         question = Question.query.filter_by(question_id=question_id).first()
 
         # question matching check
-        original_question = list(question.values())
+        original_question = list(question.form.values())
         requested_question = list(grading.keys())
 
         if original_question != requested_question:
             abort(400)
 
-        new_interview_data = InterviewData(info_id=info.info_id,
+        new_interview_data = InterviewData(user_id=user.user_id,
                                            admin_id=admin.admin_id,
                                            question_id=question.question_id,
                                            take_interview=take_interview,
                                            interview_result=grading,
-                                           comment=comment,)
+                                           comment=comment)
 
-        db.session.commit(new_interview_data)
-        db.session.add()
+        db.session.add(new_interview_data)
+        db.session.commit()
 
         return 200
 
