@@ -31,8 +31,10 @@ class QuestionList(BaseResource):
     @admin_required
     def get(self):
         questions = Question.query.all()
+        response = [question.__dict__ for question in questions]
 
-        response = [dict(question) for question in questions]
+        for r in response:
+            r.pop("_sa_instance_state")
 
         return self.unicode_safe_json_dumps(response, 200)
 
