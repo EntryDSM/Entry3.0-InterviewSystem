@@ -41,8 +41,16 @@ class Config:
         ],
         'tags': [
             {
-                'name': 'Some Tag',
-                'description': 'Some API'
+                'name': 'Admin',
+                'description': 'Admin menu API'
+            },
+            {
+                'name': 'Auth',
+                'description': 'Auth API'
+            },
+            {
+                'name': 'Interview',
+                'description': 'Interview API'
             }
         ]
     }
