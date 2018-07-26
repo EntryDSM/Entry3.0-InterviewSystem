@@ -4,7 +4,11 @@ db = SQLAlchemy()
 
 
 class SQLAlchemy:
-    def __init__(self, app):
+    def __init__(self, app=None):
+        if app is not None:
+            self.init_app(app)
+
+    def init_app(self, app):
         db.init_app(app=app)
 
         if app.config["DEBUG"] is True:
