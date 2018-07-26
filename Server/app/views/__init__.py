@@ -79,7 +79,11 @@ class BaseResource(Resource):
 
 
 class Router:
-    def __init__(self, app):
+    def __init__(self, app=None):
+        if app is not None:
+            self.init_app(app)
+
+    def init_app(self, app):
         from app.views.auth import auth
         app.register_blueprint(auth.api.blueprint)
 
