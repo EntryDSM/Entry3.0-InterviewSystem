@@ -6,6 +6,7 @@ from datetime import datetime
 from .interview_data import InterviewData
 from .info import Info
 from .interview_final import InterviewFinal
+from .graduate_info import GradudateInfo
 
 
 class GraduateTypeEnum(Enum):
@@ -26,6 +27,7 @@ class User(db.Model):
     # one to one
     info = relationship("Info", uselist=False, backref="user")
     interview_final = relationship("InterviewFinal", uselist=False, backref="user")
+    graduate_info = relationship("GraduateInfo", uselist=False, backref="user")
 
     # one to many
     interview_data = relationship("InterviewData", uselist=False, backref="user")
