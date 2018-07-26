@@ -22,7 +22,7 @@ def create_app(*config_cls):
     JWTManager().init_app(app_)
     SQLAlchemy().init_app(app_)
     Router().init_app(app_)
-    Swagger().init_app(app_)
+    Swagger(template=app_.config['SWAGGER_TEMPLATE']).init_app(app_)
 
     app_.after_request(after_request)
 

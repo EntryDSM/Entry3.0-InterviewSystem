@@ -21,3 +21,28 @@ class Config:
     SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:wasitacatisaw?@localhost:3333/entry"
     # SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:wasitacatisaw?@localhost:3333/"+SERVICE_NAME
     SQLALCHEMY_ECHO = True
+
+    SWAGGER = {
+        'title': SERVICE_NAME,
+        'specs_route': '/docs',
+        'uiversion': 3,
+
+        'info': {
+            'title': SERVICE_NAME + ' API',
+            'version': '1.0',
+            'description': 'Interview System'
+        },
+        'basePath': '/ '
+    }
+
+    SWAGGER_TEMPLATE = {
+        'schemes': [
+            'http'
+        ],
+        'tags': [
+            {
+                'name': 'Some Tag',
+                'description': 'Some API'
+            }
+        ]
+    }
