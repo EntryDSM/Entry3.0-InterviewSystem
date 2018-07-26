@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_jwt_extended import JWTManager
+from flasgger import Swagger
 
 from app.views import Router, after_request
 from app.models import SQLAlchemy
@@ -21,6 +22,7 @@ def create_app(*config_cls):
     JWTManager(app_)
     SQLAlchemy(app_)
     Router(app_)
+    Swagger().init_app(app_)
 
     app_.after_request(after_request)
 
