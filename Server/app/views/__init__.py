@@ -91,7 +91,7 @@ class Router:
         app.register_blueprint(question.api.blueprint)
 
         from app.views.interview.grading import grading
-        from app.views.interview.search import search
+        from app.views.interview.search import search, study_plan
         app.register_blueprint(grading.api.blueprint)
         app.register_blueprint(search.api.blueprint)
 
