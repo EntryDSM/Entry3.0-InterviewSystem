@@ -6,7 +6,7 @@ from datetime import datetime
 from .interview_data import InterviewData
 from .info import Info
 from .interview_final import InterviewFinal
-from .graduate_info import GradudateInfo
+from .graduate_info import GraduateInfo
 
 
 class GraduateTypeEnum(Enum):

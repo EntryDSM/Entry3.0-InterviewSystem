@@ -2,7 +2,7 @@ from app.models import db
 from sqlalchemy.dialects.mysql import INTEGER as Integer
 
 
-class GradudateInfo(db.Model):
+class GraduateInfo(db.Model):
     __tablename__ = "graduate_info"
 
     user_id = db.Column(db.String(32), db.ForeignKey("user.user_id", ondelete='CASCADE'), primary_key=True)
