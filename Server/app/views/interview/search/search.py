@@ -4,6 +4,8 @@ from app.views import BaseResource, admin_required
 
 from app.models.question import Question
 from app.models.info import Info
+from app.models.user import User
+from app.models.graduate_info import GraduateInfo
 from app.models import db
 
 api = Api(Blueprint('search', __name__))
@@ -17,11 +19,16 @@ class Search(BaseResource):
         questions = Question.query.all()
         questions = [[question.title, question.question_id] for question in questions]
 
-        student_info = Info.query.filter_by(exam_code=exam_code).first()
+        student_info = db.session.query(User, Info, GraduateInfo)\
+            .join(Info)\
+            .join(GraduateInfo)\
+            .filter(Info.exam_code==exam_code).first()
+
         student_info = {
-            "name": student_info.name,
-            "admission_type": str(student_info.admission),
-            "img_path": student_info.img_path
+            "name": student_info.Info.name,
+            "admission_type": str(student_info.Info.admission),
+            "img_path": student_info.Info.img_path,
+            "school": student_info.GraduateInfo.school_name
         }
 
         response = {
