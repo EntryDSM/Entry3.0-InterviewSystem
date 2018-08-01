@@ -94,5 +94,6 @@ class Router:
         from app.views.interview.search import search, study_plan
         app.register_blueprint(grading.api.blueprint)
         app.register_blueprint(search.api.blueprint)
+        app.register_blueprint(study_plan.api.blueprint)
 
         print("[INFO] Router initialized")
