@@ -60,7 +60,12 @@ class Manage(BaseResource):
     @swag_from(MANAGE_PATCH)
     def patch(self, question_id: int):
         request_change = request.json
-        Question.query.fitler_by(question_id=question_id).update(request_change)
+        question = Question.query.filter_by(question_id=question_id)
+
+        if question.first() is None:
+            return Response(status=403)
+
+        question.update(request_change)
         db.session.commit()
 
         return Response(status=200)
@@ -68,6 +73,8 @@ class Manage(BaseResource):
     @admin_required
     @swag_from(MANAGE_DELETE)
     def delete(self, question_id: int):
-        Question.query.fitler_by(question_id=question_id).delete()
+        question = Question.query.filter_by(question_id=question_id).first()
+        db.session.delete(question)
+        db.session.commit()
 
         return Response(status=200)
