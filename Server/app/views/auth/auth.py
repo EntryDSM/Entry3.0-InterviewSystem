@@ -4,6 +4,8 @@ from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity, get_raw_jwt
 from app.views import blacklist_check, blacklist, BaseResource
 from werkzeug.security import check_password_hash
+from flasgger import swag_from
+from app.docs.auth.auth import *
 
 from app.models.admin import Admin
 
@@ -12,6 +14,7 @@ api = Api(Blueprint('auth', __name__))
 
 @api.resource('/auth')
 class Auth(BaseResource):
+    @swag_from(AUTH)
     def post(self):
         request_data = request.json
         email = request_data['email']
@@ -37,6 +40,7 @@ class Auth(BaseResource):
 @api.resource('/refresh')
 class Refresh(Resource):
     @blacklist_check
+    @swag_from(REFRESH)
     def post(self):
         current_user = get_jwt_identity()
         response = dict(
@@ -48,6 +52,7 @@ class Refresh(Resource):
 
 @api.resource('/logout')
 class Logout(Resource):
+    @swag_from(LOGOUT)
     @blacklist_check
     def delete(self):
         jti = get_raw_jwt()['jti']
