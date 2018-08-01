@@ -7,6 +7,8 @@ from app.models.info import Info
 from app.models.question import Question
 from app.models.admin import Admin
 from app.models.user import User
+from flasgger import swag_from
+from app.docs.interview.grading import *
 
 api = Api(Blueprint('grading', __name__))
 
@@ -14,6 +16,7 @@ api = Api(Blueprint('grading', __name__))
 @api.resource('/<exam_code>/<question_id>')
 class Grading(BaseResource):
     @auth_required
+    @swag_from(GRADING_POST)
     def post(self, exam_code: str, question_id: int):
         request_data = request.json
 
@@ -48,6 +51,7 @@ class Grading(BaseResource):
         return 200
 
     @auth_required
+    @swag_from(GRADING_GET)
     def get(self, exam_code: int, question_id: int):
         question = Question.query.filter_by(question_id=question_id).first()
         question = question.__dict__
