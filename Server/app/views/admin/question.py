@@ -11,6 +11,7 @@ api.prefix = '/admin/question'
 
 @api.resource('/new')
 class Maker(BaseResource):
+    @swag_from(NEW_POST)
     @admin_required
     def post(self):
         request_data = request.json
@@ -29,6 +30,7 @@ class Maker(BaseResource):
 @api.resource('/')
 class QuestionList(BaseResource):
     @admin_required
+    @swag_from(MAIN_GET)
     def get(self):
         questions = Question.query.all()
         response = [question.__dict__ for question in questions]
@@ -42,6 +44,7 @@ class QuestionList(BaseResource):
 @api.resource('/<int:question_id>')
 class Manage(BaseResource):
     @admin_required
+    @swag_from(MANAGE_GET)
     def get(self, question_id: int):
         question = Question.query.fitler_by(question_id=question_id)
 
@@ -51,6 +54,7 @@ class Manage(BaseResource):
 
     @admin_required
     def post(self, question_id: int):
+    @swag_from(MANAGE_PATCH)
         request_change = request.json
         Question.query.fitler_by(question_id=question_id).update(request_change)
         db.session.commit()
@@ -58,6 +62,7 @@ class Manage(BaseResource):
         return 200
 
     @admin_required
+    @swag_from(MANAGE_DELETE)
     def delete(self, question_id: int):
         Question.query.fitler_by(question_id=question_id).delete()
 
