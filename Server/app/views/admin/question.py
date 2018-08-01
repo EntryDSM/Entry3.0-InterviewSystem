@@ -49,9 +49,10 @@ class Manage(BaseResource):
     @admin_required
     @swag_from(MANAGE_GET)
     def get(self, question_id: int):
-        question = Question.query.fitler_by(question_id=question_id)
+        question = Question.query.filter_by(question_id=question_id).first()
 
-        response = dict(question)
+        response = question.__dict__
+        response.pop("_sa_instance_state")
 
         return self.unicode_safe_json_dumps(response, 200)
 
