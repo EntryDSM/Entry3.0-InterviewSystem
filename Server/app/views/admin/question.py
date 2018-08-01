@@ -1,9 +1,12 @@
-from flask import request, Blueprint
+from flask import request, Blueprint, Response
+from flask_restful import Api
+from flasgger import swag_from
 
 from app.models import db
 from app.models.question import Question
 from app.views import BaseResource, admin_required
-from flask_restful import Api
+
+from app.docs.admin.question import *
 
 api = Api(Blueprint('question', __name__))
 api.prefix = '/admin/question'
@@ -24,7 +27,7 @@ class Maker(BaseResource):
         db.session.add(new_question)
         db.session.commit()
 
-        return 200
+        return Response(status=200)
 
 
 @api.resource('/')
@@ -59,11 +62,11 @@ class Manage(BaseResource):
         Question.query.fitler_by(question_id=question_id).update(request_change)
         db.session.commit()
 
-        return 200
+        return Response(status=200)
 
     @admin_required
     @swag_from(MANAGE_DELETE)
     def delete(self, question_id: int):
         Question.query.fitler_by(question_id=question_id).delete()
 
-        return 200
+        return Response(status=200)
