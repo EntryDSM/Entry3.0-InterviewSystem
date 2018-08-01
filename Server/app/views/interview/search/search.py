@@ -8,6 +8,9 @@ from app.models.user import User
 from app.models.graduate_info import GraduateInfo
 from app.models import db
 
+from app.docs.interview.search import SEARCH
+from flasgger import swag_from
+
 api = Api(Blueprint('search', __name__))
 api.prefix = '/search'
 
@@ -15,6 +18,7 @@ api.prefix = '/search'
 @api.resource("/<int:exam_code>")
 class Search(BaseResource):
     @admin_required
+    @swag_from(SEARCH)
     def get(self, exam_code: int):
         questions = Question.query.all()
         questions = [[question.title, question.question_id] for question in questions]
