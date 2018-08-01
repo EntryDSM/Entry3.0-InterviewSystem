@@ -57,8 +57,8 @@ class Manage(BaseResource):
         return self.unicode_safe_json_dumps(response, 200)
 
     @admin_required
-    def post(self, question_id: int):
     @swag_from(MANAGE_PATCH)
+    def patch(self, question_id: int):
         request_change = request.json
         Question.query.fitler_by(question_id=question_id).update(request_change)
         db.session.commit()
