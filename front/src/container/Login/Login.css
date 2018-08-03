@@ -1,0 +1,108 @@
+.Login{
+  font-family: 'NanumSquareRound', sans-serif;
+}
+.Login__Square1{
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-bottom: 100vh solid #82cdca;
+  border-right: 47px solid transparent;
+  height: 0;
+  width: 48vw;
+  border-image-width: 0 0 0 0px;
+  border-style: solid;
+  border-image: linear-gradient(to right, #82cdca 0%, #5db3b6 100%);
+  border-image-slice: 1;
+}
+.Login__Square2{
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-bottom: 100vh solid transparent;
+  border-right: 50px solid #FFF;
+  height: 0;
+  width: 48vw;
+}
+.Login__img{
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  width: 20%;
+}
+.Login__contents{
+  width: calc(52vw - 47px);
+  height: 100vh;
+  position: absolute;
+  right: 0;
+}
+.Login__contents__title{
+  display: block;
+  width: calc(52vw - 47px);
+  position: absolute;
+  top: 27%;
+  font-size: calc(7vmin + 20px);
+  color: #82cdca;
+  font-weight: 900;
+  text-align: center;
+}
+.Login__contents__input{
+  position: relative;
+  top: calc(37% + 20px);
+  display: block;
+  width: 600px;
+  height: calc(3% + 30px);
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: solid 1px #41beb8;
+  font-size: 35px;
+  padding: 15px 25px;
+  color: #5db3b6;
+  margin: 0 auto;
+  font-family: 'NanumSquareRound', sans-serif;
+  margin-top: 20px;
+  box-shadow: 4px 4px 10px #AAA;
+}
+
+.Login__contents__input:focus{
+  outline: none;
+}
+
+.Login__contents__input::placeholder{
+  color: #82cdca;
+}
+.Login__contents__btn{
+  position: relative;
+  top: calc(42.5% + 20px);
+  display: block;
+  width: 185px;
+  height: 50px;
+  border-radius: 8px;
+  background-color: #82cdca;
+  color: white;
+  font-size: 25px;
+  margin: 0 auto;
+  cursor: pointer;
+  border: 0;
+  box-shadow: 4px 4px 10px #AAA;
+}
+.Login__contents__btn:hover{
+  background-color: #5db3b6;
+  animation: loginbtn 0.5s;
+}
+.Login__contents__btn:focus{
+  outline: none;
+}
+
+@keyframes loginbtn {
+  0%{
+    top: calc(42.5% + 20px);
+    background-color: #82cdca;
+  }
+  50%{
+    top: calc(42.5% + 10px);
+  }
+  100%{
+    top: calc(42.5% + 20px);
+    background-color: #5db3b6;
+  }
+}
