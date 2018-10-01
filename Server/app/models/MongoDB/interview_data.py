@@ -1,6 +1,16 @@
 from mongoengine import *
 
 
+class Question(Document):
+    title = StringField()  # exam, plan, passion, understand, possibility, lang_use, algorithm, creativity
+    body = StringField()
+    judges = ListField(StringField)
+
+
+class InterviewData(DynamicEmbeddedDocument):
+    question = ReferenceField(Question)
+
+
 class StudentData(Document):
     exam_code = StringField(primary_key=True)
     plan_test = DictField()
@@ -8,7 +18,7 @@ class StudentData(Document):
     understand_test = DictField()
     possibility_test = DictField()
 
-    interview_score = FloatField()
+    full_score = FloatField()
     conversion_score = FloatField()
 
     is_take = BooleanField(default=False)
@@ -20,8 +30,6 @@ class CodeTestData(Document):
     algorithm = DictField()
     creativity = DictField()
 
-    code_score = FloatField()
+    score = FloatField()
 
     is_take = BooleanField(default=True)
-
-
