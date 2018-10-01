@@ -87,13 +87,8 @@ class Router:
         from app.views.auth import auth
         app.register_blueprint(auth.api.blueprint)
 
-        from app.views.admin import question
-        app.register_blueprint(question.api.blueprint)
-
-        from app.views.interview.grading import grading
-        from app.views.interview.search import search, study_plan
-        app.register_blueprint(grading.api.blueprint)
-        app.register_blueprint(search.api.blueprint)
-        app.register_blueprint(study_plan.api.blueprint)
+        from . import test
+        app.register_blueprint(test.api_1.blueprint)
+        app.register_blueprint(test.api_2.blueprint)
 
         print("[INFO] Router initialized")
